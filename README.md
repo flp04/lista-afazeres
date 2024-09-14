@@ -15,3 +15,6 @@ Os afazeres são digitados no campo em branco, sendo salvos com a tecla enter ou
 - Após conclusão, não é possível excluir ou editar a tarefa
 - Ocultar tarefas concluídas
 - As atividades não realizadas no dia, são automaticamente replicadas para o próximo com um asterisco (*)
+
+# Tecnologias Utilizadas
+C#, .Net, Entity, MySql, 
