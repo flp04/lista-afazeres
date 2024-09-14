@@ -17,4 +17,5 @@ Os afazeres são digitados no campo em branco, sendo salvos com a tecla enter ou
 - As atividades não realizadas no dia, são automaticamente replicadas para o próximo com um asterisco (*)
 
 # Tecnologias Utilizadas
-C#, .Net, Entity, MySql, 
+- Backend: C#, .Net, Entity, MySql, Quarta
+- Frontend: HTML, CSS, Javascript, Bootstrap
