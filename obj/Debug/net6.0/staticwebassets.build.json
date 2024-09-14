@@ -1,0 +1,37 @@
+{
+  "Version": 1,
+  "Hash": "YrpLTIqUO5wkq7HNBYmv1/RXvmAfI09rXeYXA2Flaec=",
+  "Source": "lista-afazeres",
+  "BasePath": "_content/lista-afazeres",
+  "Mode": "Default",
+  "ManifestType": "Build",
+  "ReferencedProjectsConfiguration": [],
+  "DiscoveryPatterns": [
+    {
+      "Name": "lista-afazeres\\wwwroot",
+      "Source": "lista-afazeres",
+      "ContentRoot": "C:\\pessoal\\dotnet-api\\todolist\\wwwroot\\",
+      "BasePath": "_content/lista-afazeres",
+      "Pattern": "**"
+    }
+  ],
+  "Assets": [
+    {
+      "Identity": "C:\\pessoal\\dotnet-api\\todolist\\wwwroot\\index.html",
+      "SourceId": "lista-afazeres",
+      "SourceType": "Discovered",
+      "ContentRoot": "C:\\pessoal\\dotnet-api\\todolist\\wwwroot\\",
+      "BasePath": "_content/lista-afazeres",
+      "RelativePath": "index.html",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\index.html"
+    }
+  ]
+}

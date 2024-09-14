@@ -1,0 +1,383 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+  <title>Lista de Afazeres</title>
+  <style>
+    body {
+      background-color: black;
+      color: white;
+    }
+    h3 {
+      font-weight: bold;
+      color: black;
+      padding: 5px;
+    }
+    input {
+      border: none;
+      border-radius: 3px;
+    }
+    .input-data {
+      width: 220px;
+      height: 36px;
+      font-size: 24px;
+      text-align: center;
+      margin-top: 7px;
+      font-weight: bold;
+    }
+    #quadro {
+      border: 2px black solid;
+      border-radius: 10px;
+      min-height: 500px;
+    }
+    .hoje {
+      background-color: darksalmon;
+    }
+    .amanha {
+      background-color: deepskyblue;
+    }
+    .outro {
+      background-color: gold;
+    }
+    .afazer {
+      border: 1px gainsboro solid;
+      border-radius: 5px;
+      margin: 10px;
+      background-color: gainsboro;
+    }
+  </style>
+</head>
+<body>
+  <section id="app">
+    <h1 style="text-align: center; padding: 15px;">LISTA DE AFAZERES</h2>
+    <!-- <br></br> -->
+    <div class="row" style="margin: 5px;">
+      <div id="quadro" class="col-md-4 hoje">
+        <h3 style="text-align: center;" id="hoje">Hoje</h3>
+        <div id="lista-hoje">
+          <div id="afazer1" class="afazer">
+            <input style="width: 80%; margin: 5px" type="text" placeholder="Digite um afazer" oninput="observadorInput(this)" onblur="salvarInput(this)" onkeydown="if(event.key === 'Enter')salvarInput(this)">
+            <svg onclick="marcarFeito(this)" xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="black" class="bi bi-check2" viewBox="0 0 16 16">
+              <path d="M13.854 3.646a.5.5 0 0 1 0 .708l-7 7a.5.5 0 0 1-.708 0l-3.5-3.5a.5.5 0 1 1 .708-.708L6.5 10.293l6.646-6.647a.5.5 0 0 1 .708 0"/>
+            </svg>
+            <svg onclick="editar(this)" xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="black" class="bi bi-pencil-fill" viewBox="0 0 16 16">
+              <path d="M12.854.146a.5.5 0 0 0-.707 0L10.5 1.793 14.207 5.5l1.647-1.646a.5.5 0 0 0 0-.708zm.646 6.061L9.793 2.5 3.293 9H3.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.207zm-7.468 7.468A.5.5 0 0 1 6 13.5V13h-.5a.5.5 0 0 1-.5-.5V12h-.5a.5.5 0 0 1-.5-.5V11h-.5a.5.5 0 0 1-.5-.5V10h-.5a.5.5 0 0 1-.175-.032l-.179.178a.5.5 0 0 0-.11.168l-2 5a.5.5 0 0 0 .65.65l5-2a.5.5 0 0 0 .168-.11z"/>
+            </svg>
+            <svg onclick="excluir(this)" xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="black" class="bi bi-trash3-fill" viewBox="0 0 16 16">
+              <path d="M11 1.5v1h3.5a.5.5 0 0 1 0 1h-.538l-.853 10.66A2 2 0 0 1 11.115 16h-6.23a2 2 0 0 1-1.994-1.84L2.038 3.5H1.5a.5.5 0 0 1 0-1H5v-1A1.5 1.5 0 0 1 6.5 0h3A1.5 1.5 0 0 1 11 1.5m-5 0v1h4v-1a.5.5 0 0 0-.5-.5h-3a.5.5 0 0 0-.5.5M4.5 5.029l.5 8.5a.5.5 0 1 0 .998-.06l-.5-8.5a.5.5 0 1 0-.998.06m6.53-.528a.5.5 0 0 0-.528.47l-.5 8.5a.5.5 0 0 0 .998.058l.5-8.5a.5.5 0 0 0-.47-.528M8 4.5a.5.5 0 0 0-.5.5v8.5a.5.5 0 0 0 1 0V5a.5.5 0 0 0-.5-.5"/>
+            </svg>
+            <!-- <span style="cursor: pointer;" onclick="excluir(this)">X</span> -->
+          </div>
+        </div>
+      </div>
+      <div id="quadro" class="col-md-4 amanha">
+        <h3 style="text-align: center;" id="amanha">Amanhã</h3>
+        <div id="lista-amanha">
+          <div id="afazer1" class="afazer">
+            <input style="width: 80%; margin: 5px" type="text" placeholder="Digite um afazer" oninput="observadorInput(this)" onblur="salvarInput(this)" onkeydown="if(event.key === 'Enter')salvarInput(this)">
+            <svg onclick="marcarFeito(this)" xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="black" class="bi bi-check2" viewBox="0 0 16 16">
+              <path d="M13.854 3.646a.5.5 0 0 1 0 .708l-7 7a.5.5 0 0 1-.708 0l-3.5-3.5a.5.5 0 1 1 .708-.708L6.5 10.293l6.646-6.647a.5.5 0 0 1 .708 0"/>
+            </svg>
+            <svg onclick="editar(this)" xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="black" class="bi bi-pencil-fill" viewBox="0 0 16 16">
+              <path d="M12.854.146a.5.5 0 0 0-.707 0L10.5 1.793 14.207 5.5l1.647-1.646a.5.5 0 0 0 0-.708zm.646 6.061L9.793 2.5 3.293 9H3.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.207zm-7.468 7.468A.5.5 0 0 1 6 13.5V13h-.5a.5.5 0 0 1-.5-.5V12h-.5a.5.5 0 0 1-.5-.5V11h-.5a.5.5 0 0 1-.5-.5V10h-.5a.5.5 0 0 1-.175-.032l-.179.178a.5.5 0 0 0-.11.168l-2 5a.5.5 0 0 0 .65.65l5-2a.5.5 0 0 0 .168-.11z"/>
+            </svg>
+            <svg onclick="excluir(this)" xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="black" class="bi bi-trash3-fill" viewBox="0 0 16 16">
+              <path d="M11 1.5v1h3.5a.5.5 0 0 1 0 1h-.538l-.853 10.66A2 2 0 0 1 11.115 16h-6.23a2 2 0 0 1-1.994-1.84L2.038 3.5H1.5a.5.5 0 0 1 0-1H5v-1A1.5 1.5 0 0 1 6.5 0h3A1.5 1.5 0 0 1 11 1.5m-5 0v1h4v-1a.5.5 0 0 0-.5-.5h-3a.5.5 0 0 0-.5.5M4.5 5.029l.5 8.5a.5.5 0 1 0 .998-.06l-.5-8.5a.5.5 0 1 0-.998.06m6.53-.528a.5.5 0 0 0-.528.47l-.5 8.5a.5.5 0 0 0 .998.058l.5-8.5a.5.5 0 0 0-.47-.528M8 4.5a.5.5 0 0 0-.5.5v8.5a.5.5 0 0 0 1 0V5a.5.5 0 0 0-.5-.5"/>
+            </svg>
+            <!-- <span style="cursor: pointer;" onclick="excluir(this)">X</span> -->
+          </div>
+        </div>
+      </div>
+      <div id="quadro" class="col-md-4 outro" style="text-align: center;">
+        <input type="date" id="input-outro-dia" class="input-data" onchange="atualizarData(this)" value="2024-09-15">
+        <!-- <h3 style="text-align: center;" id="amanha">Outro</h3> -->
+        <div id="lista-outro-dia">
+          <div id="afazer1" class="afazer">
+            <input style="width: 80%; margin: 5px" type="text" placeholder="Digite um afazer" oninput="observadorInput(this)" onblur="salvarInput(this)" onkeydown="if(event.key === 'Enter')salvarInput(this)">
+            <svg onclick="marcarFeito(this)" xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="black" class="bi bi-check2" viewBox="0 0 16 16">
+              <path d="M13.854 3.646a.5.5 0 0 1 0 .708l-7 7a.5.5 0 0 1-.708 0l-3.5-3.5a.5.5 0 1 1 .708-.708L6.5 10.293l6.646-6.647a.5.5 0 0 1 .708 0"/>
+            </svg>
+            <svg onclick="editar(this)" xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="black" class="bi bi-pencil-fill" viewBox="0 0 16 16">
+              <path d="M12.854.146a.5.5 0 0 0-.707 0L10.5 1.793 14.207 5.5l1.647-1.646a.5.5 0 0 0 0-.708zm.646 6.061L9.793 2.5 3.293 9H3.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.207zm-7.468 7.468A.5.5 0 0 1 6 13.5V13h-.5a.5.5 0 0 1-.5-.5V12h-.5a.5.5 0 0 1-.5-.5V11h-.5a.5.5 0 0 1-.5-.5V10h-.5a.5.5 0 0 1-.175-.032l-.179.178a.5.5 0 0 0-.11.168l-2 5a.5.5 0 0 0 .65.65l5-2a.5.5 0 0 0 .168-.11z"/>
+            </svg>
+            <svg onclick="excluir(this)" xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="black" class="bi bi-trash3-fill" viewBox="0 0 16 16">
+              <path d="M11 1.5v1h3.5a.5.5 0 0 1 0 1h-.538l-.853 10.66A2 2 0 0 1 11.115 16h-6.23a2 2 0 0 1-1.994-1.84L2.038 3.5H1.5a.5.5 0 0 1 0-1H5v-1A1.5 1.5 0 0 1 6.5 0h3A1.5 1.5 0 0 1 11 1.5m-5 0v1h4v-1a.5.5 0 0 0-.5-.5h-3a.5.5 0 0 0-.5.5M4.5 5.029l.5 8.5a.5.5 0 1 0 .998-.06l-.5-8.5a.5.5 0 1 0-.998.06m6.53-.528a.5.5 0 0 0-.528.47l-.5 8.5a.5.5 0 0 0 .998.058l.5-8.5a.5.5 0 0 0-.47-.528M8 4.5a.5.5 0 0 0-.5.5v8.5a.5.5 0 0 0 1 0V5a.5.5 0 0 0-.5-.5"/>
+            </svg>
+            <!-- <span style="cursor: pointer;" onclick="excluir(this)">X</span> -->
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- <div id="listas">
+    </div> -->
+  </section>
+  <script>
+    get("hoje")
+    get("amanha")
+    get("2024-09-15")
+
+    var afazeres = []
+    var data_hoje = new Date()
+    function dataFormatada (quando) {
+      let data = 0
+      if (quando == 'hoje') {
+        data = new Date()
+      } else if (quando == 'amanha') {
+        data = new Date()
+        data.setDate(data.getDate() + 1)
+        // return amanha
+      } else {
+        data = 'não definida'
+      }
+      // return data
+      const dia = String(data.getDate()).padStart(2, '0'); // dia com dois dígitos
+      const mes = String(data.getMonth() + 1).padStart(2, '0'); // mês com dois dígitos (os meses são indexados a partir de 0)
+      const ano = data.getFullYear(); // ano completo
+      return `${dia}/${mes}/${ano}`;
+    }
+    var hoje = document.getElementById('hoje')
+    hoje.textContent = "Hoje - " + dataFormatada('hoje')
+    var amanha = document.getElementById('amanha')
+    amanha.textContent = "Amanhã - " + dataFormatada('amanha')
+
+    var listas = []
+
+    function observadorInput (event) {
+
+      let elementoPai = event.parentNode
+      if (elementoPai.parentNode.children[elementoPai.parentNode.children.length-1] == elementoPai) {
+        let novo_afazer = elementoPai.cloneNode(true)
+        novo_afazer.children[0].value = ''
+        novo_afazer.id = `afazer${elementoPai.children.length}`
+        novo_afazer.id = `afazer${parseInt(elementoPai.id.replace('afazer', '')) + 1}`
+        elementoPai.parentNode.appendChild(novo_afazer)
+      }
+    }
+
+    function salvarInput (event) {
+      event.removeAttribute('onblur')
+      if (event.value != '') {
+        let afazer = {
+          elementoId: event.parentNode.id.replace('afazer', ''),
+          descricao: event.value,
+          status: false
+        }
+        afazeres.push(afazer)
+        // Configuração do fetch para um POST
+        let quando = event.parentNode.parentNode.id.replace("lista-", "")
+        if (!['hoje', 'amanha'].includes(quando)) {
+          quando = document.getElementById('input-outro-dia').value
+        }
+        fetch(`https://localhost:7116/Afazer/${quando}`, {
+        method: 'POST', // Método HTTP
+        headers: {
+            'Content-Type': 'application/json' // Especifica que estamos enviando JSON
+          },
+          body: JSON.stringify(afazer) // Converte o objeto JavaScript em uma string JSON
+        })
+        .then(response => {
+          if (!response.ok) {
+            // Trata erros de resposta (HTTP 4xx ou 5xx)
+            throw new Error('Erro na requisição: ' + response.status);
+          }
+          return response.json(); // Converte a resposta em JSON
+        })
+        .then(data => {
+          event.disabled = true
+          event.setAttribute('idbd', data.id)
+          // console.log('Sucesso:', data); // O que fazer com a resposta (opcional)
+        })
+        .catch(error => {
+          console.error('Erro:', error); // Trata erros na requisição
+        });
+      }
+    }
+    function get (quando) {
+      // Configuração do fetch para um POST
+      fetch(`https://localhost:7116/Lista/${quando}`, {
+        method: 'GET', // Método HTTP
+        headers: {
+          'Content-Type': 'application/json' // Especifica que estamos enviando JSON
+        },
+      })
+      .then(response => {
+        if (!response.ok) {
+          // Trata erros de resposta (HTTP 4xx ou 5xx)
+          throw new Error('Erro na requisição: ' + response.status);
+        }
+        return response.json(); // Converte a resposta em JSON
+      })
+      .then(data => {
+        quando = ['hoje', 'amanha'].includes(quando) ? quando : 'outro-dia'
+        let lista = document.getElementById(`lista-${quando}`)
+        if (data.length > 0) {
+          data.forEach((element, i) => {
+            if (i == 0) {
+              lista.children[i].children[0].value = element.descricao
+              lista.children[i].children[0].disabled = true
+              lista.children[i].children[0].setAttribute('idbd', element.id)
+              if (element.status) {
+                lista.children[i].children[0].style.textDecoration = 'line-through'
+                lista.children[i].children[3].removeAttribute('onclick')
+                lista.children[i].children[2].removeAttribute('onclick')
+                lista.children[i].children[1].removeAttribute('onclick')
+                lista.children[i].children[3].setAttribute('fill', 'currentColor')
+                lista.children[i].children[2].setAttribute('fill', 'currentColor')
+                lista.children[i].children[1].setAttribute('fill', 'currentColor')
+              } else {
+                lista.children[i].children[0].style.textDecoration = 'none'
+                lista.children[i].children[1].setAttribute('onclick', "marcarFeito(this)")
+                lista.children[i].children[2].setAttribute('onclick', "editar(this)")
+                lista.children[i].children[3].setAttribute('onclick', "excluir(this)")
+                lista.children[i].children[3].setAttribute('fill', 'black')
+                lista.children[i].children[2].setAttribute('fill', 'black')
+                lista.children[i].children[1].setAttribute('fill', 'black')
+              }
+            } else {
+              let novoElemento = lista.children[lista.children.length-1].cloneNode(true)
+              novoElemento.children[0].value = element.descricao
+              novoElemento.id = `afazer${i + 1}`
+              novoElemento.children[0].setAttribute('idbd', element.id)
+              if (element.status) {
+                novoElemento.children[0].style.textDecoration = 'line-through'
+                novoElemento.children[3].removeAttribute('onclick')
+                novoElemento.children[2].removeAttribute('onclick')
+                novoElemento.children[1].removeAttribute('onclick')
+                novoElemento.children[3].setAttribute('fill', 'currentColor')
+                novoElemento.children[2].setAttribute('fill', 'currentColor')
+                novoElemento.children[1].setAttribute('fill', 'currentColor')
+              } else {
+                novoElemento.children[0].style.textDecoration = 'none'
+                novoElemento.children[1].setAttribute('onclick', "marcarFeito(this)")
+                novoElemento.children[2].setAttribute('onclick', "editar(this)")
+                novoElemento.children[3].setAttribute('onclick', "excluir(this)")
+                novoElemento.children[3].setAttribute('fill', 'black')
+                novoElemento.children[2].setAttribute('fill', 'black')
+                novoElemento.children[1].setAttribute('fill', 'black')
+              }
+              lista.appendChild(novoElemento)
+            }
+          })
+          let novoElementoVazio = lista.children[lista.children.length-1].cloneNode(true)
+              novoElementoVazio.children[0].value = ''
+              novoElementoVazio.children[0].style.textDecoration = 'none'
+              novoElementoVazio.children[0].disabled = false
+              novoElementoVazio.children[1].setAttribute('onclick', "marcarFeito(this)")
+              novoElementoVazio.children[2].setAttribute('onclick', "editar(this)")
+              novoElementoVazio.children[3].setAttribute('onclick', "excluir(this)")
+              novoElementoVazio.children[3].setAttribute('fill', 'black')
+              novoElementoVazio.children[2].setAttribute('fill', 'black')
+              novoElementoVazio.children[1].setAttribute('fill', 'black')
+              // console.log(lista.children.length)
+              novoElementoVazio.id = `afazer${(lista.children.length) + 1}`
+              lista.appendChild(novoElementoVazio)
+        }
+      })
+      .catch(error => {
+        console.error('Erro:', error); // Trata erros na requisição
+      });
+    }
+    function excluir (event) {
+      if (event.parentNode.parentNode.children.length > 1 && event.parentNode.parentNode.children[event.parentNode.parentNode.children.length-1] != event.parentNode) {
+        event.parentNode.remove()
+        // console.log(event.parentNode.children[0])
+        if (event.parentNode.children[0].value != '') {
+          // Configuração do fetch para um POST
+          fetch(`https://localhost:7116/Afazer/${event.parentNode.children[0].getAttribute('idbd')}`, {
+            method: 'DELETE', // Método HTTP
+            headers: {
+              'Content-Type': 'application/json' // Especifica que estamos enviando JSON
+            },
+          })
+          .then(response => {
+            if (!response.ok) {
+              // Trata erros de resposta (HTTP 4xx ou 5xx)
+              throw new Error('Erro na requisição: ' + response.status);
+            }
+            return response.json(); // Converte a resposta em JSON
+          })
+          .then(data => {
+            console.log('tratar exclusão')
+          })
+        }
+      }
+    }
+    function editar (event) {
+      event.parentNode.children[0].disabled = false
+      event.parentNode.children[0].focus()
+      event.parentNode.children[0].setAttribute('onblur', 'atualizar(this)')
+      event.parentNode.children[0].setAttribute('onkeydown', "if(event.key === 'Enter')atualizar(this)")
+    }
+    function atualizar(event) {
+      fetch(`https://localhost:7116/Afazer/${event.getAttribute('idbd')}`, {
+        method: 'PUT', // Método HTTP
+        headers: {
+          'Content-Type': 'application/json'},
+           // Especifica que estamos enviando JSON
+          body: JSON.stringify(event.value) // Converte o objeto JavaScript em uma string JSON
+      })
+      .then(response => {
+        if (!response.ok) {
+          // Trata erros de resposta (HTTP 4xx ou 5xx)
+          throw new Error('Erro na requisição: ' + response.status);
+        }
+        return response.json(); // Converte a resposta em JSON
+      })
+      .then(data => {
+        event.disabled = true
+      })
+    }
+
+    function marcarFeito(event) {
+      if (event.parentNode.children[0].value != '') {
+        fetch(`https://localhost:7116/Afazer/ConcluirAfazer/${event.parentNode.children[0].getAttribute('idbd')}`, {
+          method: 'PUT', // Método HTTP
+          headers: {
+            'Content-Type': 'application/json'},
+             // Especifica que estamos enviando JSON
+            // body: JSON.stringify(event.value) // Converte o objeto JavaScript em uma string JSON
+        })
+        .then(response => {
+          if (!response.ok) {
+            // Trata erros de resposta (HTTP 4xx ou 5xx)
+            throw new Error('Erro na requisição: ' + response.status);
+          }
+          return response.json(); // Converte a resposta em JSON
+        })
+        .then(data => {
+          console.log('fuinha')
+          console.log(event.parentNode.children[1])
+          console.log(event.parentNode.children[2])
+          console.log(event.parentNode.children[3])
+          event.parentNode.children[0].style.textDecoration = 'line-through'
+          // event.parentNode.children.forEach((el, i) => {
+          //   console.log(i)
+          // })
+          // for ()
+          // event.parentNode.children[3].remove()
+          // event.parentNode.children[2].remove()
+          // event.parentNode.children[1].remove()
+          event.parentNode.children[3].removeAttribute('onclick')
+          event.parentNode.children[2].removeAttribute('onclick')
+          event.parentNode.children[1].removeAttribute('onclick')
+          event.parentNode.children[3].setAttribute('fill', 'currentColor')
+          event.parentNode.children[2].setAttribute('fill', 'currentColor')
+          event.parentNode.children[1].setAttribute('fill', 'currentColor')
+          // event.disabled = true
+        })
+      }
+    }
+    function atualizarData (event) {
+      if (event.parentNode.children[1].children.length > 1) {
+        for (let i = 0; i < event.parentNode.children[1].children.length; i++) {
+          event.parentNode.children[1].children[i].remove()
+        }
+      }
+      get(event.value)
+    }
+  </script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+</body>
+</html>
