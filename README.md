@@ -17,5 +17,9 @@ Os afazeres são digitados no campo em branco, sendo salvos com a tecla enter ou
 - As atividades não realizadas no dia, são automaticamente replicadas para o próximo com um asterisco (*)
 
 # Tecnologias Utilizadas
-- Backend: C#, .Net, Entity, MySql, Quarta
+- Backend: C#, .Net, Entity, MySql*, Quartz**
 - Frontend: HTML, CSS, Javascript, Bootstrap
+
+*caso prefira usar outro serviço, é necessário incluir o pacote e configurar no Program.cs
+**utilizado para programar a Cron Job de atualização diária
+
