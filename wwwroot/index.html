@@ -52,11 +52,12 @@
 <body>
   <section id="app">
     <h1 style="text-align: center; padding: 15px;">LISTA DE AFAZERES</h2>
-    <!-- <br></br> -->
+    <label for=""><input type="checkbox" onchange="ocultarConcluidos(this)">Ocultar concluídos</label>
+
     <div class="row" style="margin: 5px;">
       <div id="quadro" class="col-md-4 hoje">
         <h3 style="text-align: center;" id="hoje">Hoje</h3>
-        <div id="lista-hoje">
+        <div id="lista-hoje" class="lista">
           <div id="afazer1" class="afazer">
             <input style="width: 80%; margin: 5px" type="text" placeholder="Digite um afazer" oninput="observadorInput(this)" onblur="salvarInput(this)" onkeydown="if(event.key === 'Enter')salvarInput(this)">
             <svg onclick="marcarFeito(this)" xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="black" class="bi bi-check2" viewBox="0 0 16 16">
@@ -74,7 +75,7 @@
       </div>
       <div id="quadro" class="col-md-4 amanha">
         <h3 style="text-align: center;" id="amanha">Amanhã</h3>
-        <div id="lista-amanha">
+        <div id="lista-amanha" class="lista">
           <div id="afazer1" class="afazer">
             <input style="width: 80%; margin: 5px" type="text" placeholder="Digite um afazer" oninput="observadorInput(this)" onblur="salvarInput(this)" onkeydown="if(event.key === 'Enter')salvarInput(this)">
             <svg onclick="marcarFeito(this)" xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="black" class="bi bi-check2" viewBox="0 0 16 16">
@@ -93,7 +94,7 @@
       <div id="quadro" class="col-md-4 outro" style="text-align: center;">
         <input type="date" id="input-outro-dia" class="input-data" onchange="atualizarData(this)" value="2024-09-15">
         <!-- <h3 style="text-align: center;" id="amanha">Outro</h3> -->
-        <div id="lista-outro-dia">
+        <div id="lista-outro-dia" class="lista">
           <div id="afazer1" class="afazer">
             <input style="width: 80%; margin: 5px" type="text" placeholder="Digite um afazer" oninput="observadorInput(this)" onblur="salvarInput(this)" onkeydown="if(event.key === 'Enter')salvarInput(this)">
             <svg onclick="marcarFeito(this)" xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="black" class="bi bi-check2" viewBox="0 0 16 16">
@@ -116,7 +117,12 @@
   <script>
     get("hoje")
     get("amanha")
-    get("2024-09-15")
+    let depois_amanha = new Date()
+    depois_amanha.setDate(depois_amanha.getDate() + 2)
+    depois_amanha = (`${depois_amanha.getFullYear()}-${(depois_amanha.getMonth()+1).toString().padStart(2, '0')}-${depois_amanha.getDate()}`)
+    document.getElementById('input-outro-dia').value = depois_amanha
+    console.log(depois_amanha)
+    get(depois_amanha)
 
     var afazeres = []
     var data_hoje = new Date()
@@ -220,12 +226,21 @@
               lista.children[i].children[0].setAttribute('idbd', element.id)
               if (element.status) {
                 lista.children[i].children[0].style.textDecoration = 'line-through'
-                lista.children[i].children[3].removeAttribute('onclick')
-                lista.children[i].children[2].removeAttribute('onclick')
-                lista.children[i].children[1].removeAttribute('onclick')
-                lista.children[i].children[3].setAttribute('fill', 'currentColor')
-                lista.children[i].children[2].setAttribute('fill', 'currentColor')
-                lista.children[i].children[1].setAttribute('fill', 'currentColor')
+                // lista.children[i].children[3].removeAttribute('onclick')
+                // lista.children[i].children[2].removeAttribute('onclick')
+                // lista.children[i].children[1].removeAttribute('onclick')
+                // lista.children[i].children[3].setAttribute('fill', 'currentColor')
+                // lista.children[i].children[2].setAttribute('fill', 'currentColor')
+                // lista.children[i].children[1].setAttribute('fill', 'currentColor')
+
+                // lista.children[i].children[3].setAttribute('fill', 'currentColor')
+                // lista.children[i].children[2].setAttribute('fill', 'currentColor')
+                // lista.children[i].children[1].setAttribute('fill', 'currentColor')
+
+                lista.children[i].children[0].style.width = '90%'
+                lista.children[i].children[3].remove()
+                lista.children[i].children[2].remove()
+                lista.children[i].children[1].remove()
               } else {
                 lista.children[i].children[0].style.textDecoration = 'none'
                 lista.children[i].children[1].setAttribute('onclick', "marcarFeito(this)")
@@ -242,12 +257,18 @@
               novoElemento.children[0].setAttribute('idbd', element.id)
               if (element.status) {
                 novoElemento.children[0].style.textDecoration = 'line-through'
-                novoElemento.children[3].removeAttribute('onclick')
-                novoElemento.children[2].removeAttribute('onclick')
-                novoElemento.children[1].removeAttribute('onclick')
-                novoElemento.children[3].setAttribute('fill', 'currentColor')
-                novoElemento.children[2].setAttribute('fill', 'currentColor')
-                novoElemento.children[1].setAttribute('fill', 'currentColor')
+                // novoElemento.children[3].removeAttribute('onclick')
+                // novoElemento.children[2].removeAttribute('onclick')
+                // novoElemento.children[1].removeAttribute('onclick')
+                // novoElemento.children[3].setAttribute('fill', 'currentColor')
+                // novoElemento.children[2].setAttribute('fill', 'currentColor')
+                // novoElemento.children[1].setAttribute('fill', 'currentColor')
+
+                novoElemento.children[0].style.width = '97%'
+                console.log(novoElemento.children[3])
+                novoElemento.children[3].style.display = 'none'
+                novoElemento.children[2].style.display = 'none'
+                novoElemento.children[1].style.display = 'none'
               } else {
                 novoElemento.children[0].style.textDecoration = 'none'
                 novoElemento.children[1].setAttribute('onclick', "marcarFeito(this)")
@@ -264,12 +285,16 @@
               novoElementoVazio.children[0].value = ''
               novoElementoVazio.children[0].style.textDecoration = 'none'
               novoElementoVazio.children[0].disabled = false
-              novoElementoVazio.children[1].setAttribute('onclick', "marcarFeito(this)")
-              novoElementoVazio.children[2].setAttribute('onclick', "editar(this)")
-              novoElementoVazio.children[3].setAttribute('onclick', "excluir(this)")
-              novoElementoVazio.children[3].setAttribute('fill', 'black')
-              novoElementoVazio.children[2].setAttribute('fill', 'black')
-              novoElementoVazio.children[1].setAttribute('fill', 'black')
+              novoElementoVazio.children[0].style.width = '80%'
+              novoElementoVazio.children[1].style.display = 'inline-block'
+              novoElementoVazio.children[2].style.display = 'inline-block'
+              novoElementoVazio.children[3].style.display = 'inline-block'
+              // novoElementoVazio.children[1].setAttribute('onclick', "marcarFeito(this)")
+              // novoElementoVazio.children[2].setAttribute('onclick', "editar(this)")
+              // novoElementoVazio.children[3].setAttribute('onclick', "excluir(this)")
+              // novoElementoVazio.children[3].setAttribute('fill', 'black')
+              // novoElementoVazio.children[2].setAttribute('fill', 'black')
+              // novoElementoVazio.children[1].setAttribute('fill', 'black')
               // console.log(lista.children.length)
               novoElementoVazio.id = `afazer${(lista.children.length) + 1}`
               lista.appendChild(novoElementoVazio)
@@ -347,25 +372,17 @@
           return response.json(); // Converte a resposta em JSON
         })
         .then(data => {
-          console.log('fuinha')
-          console.log(event.parentNode.children[1])
-          console.log(event.parentNode.children[2])
-          console.log(event.parentNode.children[3])
-          event.parentNode.children[0].style.textDecoration = 'line-through'
-          // event.parentNode.children.forEach((el, i) => {
-          //   console.log(i)
-          // })
-          // for ()
-          // event.parentNode.children[3].remove()
-          // event.parentNode.children[2].remove()
-          // event.parentNode.children[1].remove()
-          event.parentNode.children[3].removeAttribute('onclick')
-          event.parentNode.children[2].removeAttribute('onclick')
-          event.parentNode.children[1].removeAttribute('onclick')
-          event.parentNode.children[3].setAttribute('fill', 'currentColor')
-          event.parentNode.children[2].setAttribute('fill', 'currentColor')
-          event.parentNode.children[1].setAttribute('fill', 'currentColor')
-          // event.disabled = true
+          // event.parentNode.children[3].removeAttribute('onclick')
+          // event.parentNode.children[2].removeAttribute('onclick')
+          // event.parentNode.children[1].removeAttribute('onclick')
+          // event.parentNode.children[3].setAttribute('fill', 'currentColor')
+          // event.parentNode.children[2].setAttribute('fill', 'currentColor')
+          // event.parentNode.children[1].setAttribute('fill', 'currentColor')
+
+          event.parentNode.children[0].style.width = '90%'
+          event.parentNode.children[3].remove()
+          event.parentNode.children[2].remove()
+          event.parentNode.children[1].remove()
         })
       }
     }
@@ -376,6 +393,28 @@
         }
       }
       get(event.value)
+    }
+    function ocultarConcluidos(event) {
+      let listas = document.getElementsByClassName('lista')
+      // console.log(listas)
+      for (let i = 0; i < listas.length; i++) {
+        for (let j = 0; j < listas[i].children.length; j++) {
+          if (window.getComputedStyle(listas[i].children[j].children[0]).textDecoration.includes('line-through')) {
+            if (event.checked) {
+              listas[i].children[j].style.display = 'none'
+            } else {
+              listas[i].children[j].style.display = 'block'
+            }
+          }
+        } 
+      }
+      // listas.forEach(el => {
+      //   console.log(el)
+      // })
+      // if (!event.checked) {
+      //   window.getComputedStyle()
+      // }
+      // console.log(event.checked)
     }
   </script>
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
