@@ -18,11 +18,11 @@ namespace Modulo.Controllers
     {
       if (quando == "hoje") {
         var Hoje = _context.Listas.Where(x => x.created_at.Date == DateTime.Today).FirstOrDefault();
-        var Afazeres = _context.Afazeres.Where(x => x.ListaId == Hoje.Id);
+        var Afazeres = _context.Afazeres.Where(x => x.ListaId == Hoje.Id && x.deleted_at == null);
         return Ok(Afazeres);
       } else if (quando == "amanha") {
         var Hoje = _context.Listas.Where(x => x.created_at.Date == DateTime.Today.AddDays(1)).FirstOrDefault();
-        var Afazeres = _context.Afazeres.Where(x => x.ListaId == Hoje.Id);
+        var Afazeres = _context.Afazeres.Where(x => x.ListaId == Hoje.Id && x.deleted_at == null);
         return Ok(Afazeres);
       } else {
         _ = int.TryParse(quando.Split('-')[0], out int ano);
@@ -40,7 +40,7 @@ namespace Modulo.Controllers
           _context.SaveChanges();
           return Ok(NovaLista);
         }
-        var Afazeres = _context.Afazeres.Where(x => x.ListaId == Oi.Id);
+        var Afazeres = _context.Afazeres.Where(x => x.ListaId == Oi.Id && x.deleted_at == null);
         return Ok(Afazeres);
         // return Ok(OutraData);
         // return Ok(Afazeres);

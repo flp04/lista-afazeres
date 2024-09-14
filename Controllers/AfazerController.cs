@@ -39,8 +39,6 @@ namespace Modulo.Controllers
           .Where(x => x.created_at.Date == OutraData.Date)
           .Select(x => x.Id)
           .FirstOrDefault();
-        // return Ok("OutraData");
-        // return Ok(OutraData);
       }
       if (ListaId == 0)
       {
@@ -62,7 +60,9 @@ namespace Modulo.Controllers
       }
 
       afazer.ListaId = ListaId;
-      
+      afazer.created_at = DateTime.Now;
+      afazer.update_at = DateTime.Now;
+
       _context.Afazeres.Add(afazer);
       _context.SaveChanges();
       return Ok(afazer);
@@ -73,6 +73,7 @@ namespace Modulo.Controllers
     {
       var Afazer = _context.Afazeres.Find(id);
       Afazer.Descricao = descricao;
+      Afazer.update_at = DateTime.Now;
       _context.Afazeres.Update(Afazer);
       _context.SaveChanges();
       return Ok(Afazer);
@@ -83,6 +84,8 @@ namespace Modulo.Controllers
     {
       var Afazer = _context.Afazeres.Find(id);
       Afazer.Status = true;
+      Afazer.update_at = DateTime.Now;
+
       _context.Afazeres.Update(Afazer);
       _context.SaveChanges();
       return Ok(Afazer);
@@ -96,6 +99,10 @@ namespace Modulo.Controllers
       if (Afazer == null) return NotFound();
 
       _context.Remove(Afazer);
+      // Afazer.update_at = DateTime.Now;
+      // Afazer.deleted_at = DateTime.Now;
+
+      // _context.Afazeres.Update(Afazer);
       _context.SaveChanges();
       return Ok(NoContent());
     }

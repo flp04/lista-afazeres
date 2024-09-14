@@ -59,7 +59,7 @@
         <h3 style="text-align: center;" id="hoje">Hoje</h3>
         <div id="lista-hoje" class="lista">
           <div id="afazer1" class="afazer">
-            <input style="width: 80%; margin: 5px" type="text" placeholder="Digite um afazer" oninput="observadorInput(this)" onblur="salvarInput(this)" onkeydown="if(event.key === 'Enter')salvarInput(this)">
+            <input style="width: 80%; margin: 5px" type="text" placeholder="Digite um afazer" oninput="observadorInput(this)" onblur="salvarInput(this)" onkeydown="if(event.key === 'Enter')moverCursor(this)">
             <svg onclick="marcarFeito(this)" xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="black" class="bi bi-check2" viewBox="0 0 16 16">
               <path d="M13.854 3.646a.5.5 0 0 1 0 .708l-7 7a.5.5 0 0 1-.708 0l-3.5-3.5a.5.5 0 1 1 .708-.708L6.5 10.293l6.646-6.647a.5.5 0 0 1 .708 0"/>
             </svg>
@@ -77,7 +77,7 @@
         <h3 style="text-align: center;" id="amanha">Amanhã</h3>
         <div id="lista-amanha" class="lista">
           <div id="afazer1" class="afazer">
-            <input style="width: 80%; margin: 5px" type="text" placeholder="Digite um afazer" oninput="observadorInput(this)" onblur="salvarInput(this)" onkeydown="if(event.key === 'Enter')salvarInput(this)">
+            <input style="width: 80%; margin: 5px" type="text" placeholder="Digite um afazer" oninput="observadorInput(this)" onblur="salvarInput(this)" onkeydown="if(event.key === 'Enter')moverCursor(this)">
             <svg onclick="marcarFeito(this)" xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="black" class="bi bi-check2" viewBox="0 0 16 16">
               <path d="M13.854 3.646a.5.5 0 0 1 0 .708l-7 7a.5.5 0 0 1-.708 0l-3.5-3.5a.5.5 0 1 1 .708-.708L6.5 10.293l6.646-6.647a.5.5 0 0 1 .708 0"/>
             </svg>
@@ -96,7 +96,7 @@
         <!-- <h3 style="text-align: center;" id="amanha">Outro</h3> -->
         <div id="lista-outro-dia" class="lista">
           <div id="afazer1" class="afazer">
-            <input style="width: 80%; margin: 5px" type="text" placeholder="Digite um afazer" oninput="observadorInput(this)" onblur="salvarInput(this)" onkeydown="if(event.key === 'Enter')salvarInput(this)">
+            <input style="width: 80%; margin: 5px" type="text" placeholder="Digite um afazer" oninput="observadorInput(this)" onblur="salvarInput(this)" onkeydown="if(event.key === 'Enter')moverCursor(this)">
             <svg onclick="marcarFeito(this)" xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="black" class="bi bi-check2" viewBox="0 0 16 16">
               <path d="M13.854 3.646a.5.5 0 0 1 0 .708l-7 7a.5.5 0 0 1-.708 0l-3.5-3.5a.5.5 0 1 1 .708-.708L6.5 10.293l6.646-6.647a.5.5 0 0 1 .708 0"/>
             </svg>
@@ -111,22 +111,17 @@
         </div>
       </div>
     </div>
-    <!-- <div id="listas">
-    </div> -->
   </section>
   <script>
-    get("hoje")
-    get("amanha")
-    let depois_amanha = new Date()
-    depois_amanha.setDate(depois_amanha.getDate() + 2)
-    depois_amanha = (`${depois_amanha.getFullYear()}-${(depois_amanha.getMonth()+1).toString().padStart(2, '0')}-${depois_amanha.getDate()}`)
-    document.getElementById('input-outro-dia').value = depois_amanha
-    console.log(depois_amanha)
-    get(depois_amanha)
+    let depois_amanha = () => { 
+      let depois_amanha = new Date()
+      depois_amanha.setDate(depois_amanha.getDate() + 2)
+      depois_amanha = (`${depois_amanha.getFullYear()}-${(depois_amanha.getMonth()+1).toString().padStart(2, '0')}-${depois_amanha.getDate()}`)
+      document.getElementById('input-outro-dia').value = depois_amanha
+      return depois_amanha
+    }
 
-    var afazeres = []
-    var data_hoje = new Date()
-    function dataFormatada (quando) {
+    let dataFormatada = (quando) => {
       let data = 0
       if (quando == 'hoje') {
         data = new Date()
@@ -137,71 +132,31 @@
       } else {
         data = 'não definida'
       }
-      // return data
       const dia = String(data.getDate()).padStart(2, '0'); // dia com dois dígitos
       const mes = String(data.getMonth() + 1).padStart(2, '0'); // mês com dois dígitos (os meses são indexados a partir de 0)
       const ano = data.getFullYear(); // ano completo
       return `${dia}/${mes}/${ano}`;
     }
-    var hoje = document.getElementById('hoje')
-    hoje.textContent = "Hoje - " + dataFormatada('hoje')
-    var amanha = document.getElementById('amanha')
-    amanha.textContent = "Amanhã - " + dataFormatada('amanha')
+        
+    getLista("hoje")
+    getLista("amanha")
+    getLista(depois_amanha())
 
-    var listas = []
+    document.getElementById('hoje').textContent += ' - ' + dataFormatada('hoje')
+    document.getElementById('amanha').textContent += ' - ' + dataFormatada('amanha')
 
     function observadorInput (event) {
-
-      let elementoPai = event.parentNode
-      if (elementoPai.parentNode.children[elementoPai.parentNode.children.length-1] == elementoPai) {
-        let novo_afazer = elementoPai.cloneNode(true)
-        novo_afazer.children[0].value = ''
-        novo_afazer.id = `afazer${elementoPai.children.length}`
-        novo_afazer.id = `afazer${parseInt(elementoPai.id.replace('afazer', '')) + 1}`
-        elementoPai.parentNode.appendChild(novo_afazer)
+      let divAfazerAtual = event.parentNode
+      let ultimoAfazerLista = divAfazerAtual.parentNode.children[divAfazerAtual.parentNode.children.length-1]
+      if (divAfazerAtual == ultimoAfazerLista) {
+        let nova_div_afazer = divAfazerAtual.cloneNode(true)
+        nova_div_afazer.children[0].value = '' // limpa o valor do input
+        nova_div_afazer.id = `afazer${parseInt(divAfazerAtual.id.replace('afazer', '')) + 1}`
+        divAfazerAtual.parentNode.appendChild(nova_div_afazer)
       }
     }
 
-    function salvarInput (event) {
-      event.removeAttribute('onblur')
-      if (event.value != '') {
-        let afazer = {
-          elementoId: event.parentNode.id.replace('afazer', ''),
-          descricao: event.value,
-          status: false
-        }
-        afazeres.push(afazer)
-        // Configuração do fetch para um POST
-        let quando = event.parentNode.parentNode.id.replace("lista-", "")
-        if (!['hoje', 'amanha'].includes(quando)) {
-          quando = document.getElementById('input-outro-dia').value
-        }
-        fetch(`https://localhost:7116/Afazer/${quando}`, {
-        method: 'POST', // Método HTTP
-        headers: {
-            'Content-Type': 'application/json' // Especifica que estamos enviando JSON
-          },
-          body: JSON.stringify(afazer) // Converte o objeto JavaScript em uma string JSON
-        })
-        .then(response => {
-          if (!response.ok) {
-            // Trata erros de resposta (HTTP 4xx ou 5xx)
-            throw new Error('Erro na requisição: ' + response.status);
-          }
-          return response.json(); // Converte a resposta em JSON
-        })
-        .then(data => {
-          event.disabled = true
-          event.setAttribute('idbd', data.id)
-          // console.log('Sucesso:', data); // O que fazer com a resposta (opcional)
-        })
-        .catch(error => {
-          console.error('Erro:', error); // Trata erros na requisição
-        });
-      }
-    }
-    function get (quando) {
-      // Configuração do fetch para um POST
+    function getLista (quando) {
       fetch(`https://localhost:7116/Lista/${quando}`, {
         method: 'GET', // Método HTTP
         headers: {
@@ -219,121 +174,105 @@
         quando = ['hoje', 'amanha'].includes(quando) ? quando : 'outro-dia'
         let lista = document.getElementById(`lista-${quando}`)
         if (data.length > 0) {
-          data.forEach((element, i) => {
+          data.forEach((afazer, i) => {
             if (i == 0) {
-              lista.children[i].children[0].value = element.descricao
               lista.children[i].children[0].disabled = true
-              lista.children[i].children[0].setAttribute('idbd', element.id)
-              if (element.status) {
-                lista.children[i].children[0].style.textDecoration = 'line-through'
-                // lista.children[i].children[3].removeAttribute('onclick')
-                // lista.children[i].children[2].removeAttribute('onclick')
-                // lista.children[i].children[1].removeAttribute('onclick')
-                // lista.children[i].children[3].setAttribute('fill', 'currentColor')
-                // lista.children[i].children[2].setAttribute('fill', 'currentColor')
-                // lista.children[i].children[1].setAttribute('fill', 'currentColor')
-
-                // lista.children[i].children[3].setAttribute('fill', 'currentColor')
-                // lista.children[i].children[2].setAttribute('fill', 'currentColor')
-                // lista.children[i].children[1].setAttribute('fill', 'currentColor')
-
-                lista.children[i].children[0].style.width = '90%'
-                lista.children[i].children[3].remove()
-                lista.children[i].children[2].remove()
-                lista.children[i].children[1].remove()
+              lista.children[i].children[0].value = afazer.descricao
+              lista.children[i].children[0].setAttribute('idbd', afazer.id)
+              if (afazer.status) {
+                riscaTarefaExcluiBotoes(lista.children[i])
               } else {
-                lista.children[i].children[0].style.textDecoration = 'none'
-                lista.children[i].children[1].setAttribute('onclick', "marcarFeito(this)")
-                lista.children[i].children[2].setAttribute('onclick', "editar(this)")
-                lista.children[i].children[3].setAttribute('onclick', "excluir(this)")
-                lista.children[i].children[3].setAttribute('fill', 'black')
-                lista.children[i].children[2].setAttribute('fill', 'black')
-                lista.children[i].children[1].setAttribute('fill', 'black')
+                reexibeBotoes(lista.children[i])
               }
             } else {
               let novoElemento = lista.children[lista.children.length-1].cloneNode(true)
-              novoElemento.children[0].value = element.descricao
               novoElemento.id = `afazer${i + 1}`
-              novoElemento.children[0].setAttribute('idbd', element.id)
-              if (element.status) {
-                novoElemento.children[0].style.textDecoration = 'line-through'
-                // novoElemento.children[3].removeAttribute('onclick')
-                // novoElemento.children[2].removeAttribute('onclick')
-                // novoElemento.children[1].removeAttribute('onclick')
-                // novoElemento.children[3].setAttribute('fill', 'currentColor')
-                // novoElemento.children[2].setAttribute('fill', 'currentColor')
-                // novoElemento.children[1].setAttribute('fill', 'currentColor')
-
-                novoElemento.children[0].style.width = '97%'
-                console.log(novoElemento.children[3])
-                novoElemento.children[3].style.display = 'none'
-                novoElemento.children[2].style.display = 'none'
-                novoElemento.children[1].style.display = 'none'
+              novoElemento.children[0].value = afazer.descricao
+              novoElemento.children[0].setAttribute('idbd', afazer.id)
+              if (afazer.status) {
+                riscaTarefaExcluiBotoes(novoElemento)
               } else {
-                novoElemento.children[0].style.textDecoration = 'none'
-                novoElemento.children[1].setAttribute('onclick', "marcarFeito(this)")
-                novoElemento.children[2].setAttribute('onclick', "editar(this)")
-                novoElemento.children[3].setAttribute('onclick', "excluir(this)")
-                novoElemento.children[3].setAttribute('fill', 'black')
-                novoElemento.children[2].setAttribute('fill', 'black')
-                novoElemento.children[1].setAttribute('fill', 'black')
+                reexibeBotoes(novoElemento)
               }
               lista.appendChild(novoElemento)
             }
           })
           let novoElementoVazio = lista.children[lista.children.length-1].cloneNode(true)
-              novoElementoVazio.children[0].value = ''
-              novoElementoVazio.children[0].style.textDecoration = 'none'
-              novoElementoVazio.children[0].disabled = false
-              novoElementoVazio.children[0].style.width = '80%'
-              novoElementoVazio.children[1].style.display = 'inline-block'
-              novoElementoVazio.children[2].style.display = 'inline-block'
-              novoElementoVazio.children[3].style.display = 'inline-block'
-              // novoElementoVazio.children[1].setAttribute('onclick', "marcarFeito(this)")
-              // novoElementoVazio.children[2].setAttribute('onclick', "editar(this)")
-              // novoElementoVazio.children[3].setAttribute('onclick', "excluir(this)")
-              // novoElementoVazio.children[3].setAttribute('fill', 'black')
-              // novoElementoVazio.children[2].setAttribute('fill', 'black')
-              // novoElementoVazio.children[1].setAttribute('fill', 'black')
-              // console.log(lista.children.length)
-              novoElementoVazio.id = `afazer${(lista.children.length) + 1}`
-              lista.appendChild(novoElementoVazio)
+          novoElementoVazio.id = `afazer${(lista.children.length) + 1}`
+          novoElementoVazio.children[0].value = ''
+          novoElementoVazio.children[0].disabled = false
+          reexibeBotoes(novoElementoVazio)
+          lista.appendChild(novoElementoVazio)
         }
       })
       .catch(error => {
         console.error('Erro:', error); // Trata erros na requisição
       });
     }
-    function excluir (event) {
-      if (event.parentNode.parentNode.children.length > 1 && event.parentNode.parentNode.children[event.parentNode.parentNode.children.length-1] != event.parentNode) {
-        event.parentNode.remove()
-        // console.log(event.parentNode.children[0])
-        if (event.parentNode.children[0].value != '') {
-          // Configuração do fetch para um POST
-          fetch(`https://localhost:7116/Afazer/${event.parentNode.children[0].getAttribute('idbd')}`, {
-            method: 'DELETE', // Método HTTP
-            headers: {
-              'Content-Type': 'application/json' // Especifica que estamos enviando JSON
-            },
-          })
-          .then(response => {
-            if (!response.ok) {
-              // Trata erros de resposta (HTTP 4xx ou 5xx)
-              throw new Error('Erro na requisição: ' + response.status);
-            }
-            return response.json(); // Converte a resposta em JSON
-          })
-          .then(data => {
-            console.log('tratar exclusão')
-          })
+
+    function salvarInput (event) {
+      if (event.value != '') {
+        let afazer = {
+          descricao: event.value,
+          status: false,
         }
+        
+        let quando = event.parentNode.parentNode.id.replace("lista-", "")
+        if (!['hoje', 'amanha'].includes(quando)) {
+          quando = document.getElementById('input-outro-dia').value
+        }
+
+        fetch(`https://localhost:7116/Afazer/${quando}`, {
+        method: 'POST', // Método HTTP
+        headers: {
+            'Content-Type': 'application/json' // Especifica que estamos enviando JSON
+          },
+          body: JSON.stringify(afazer) // Converte o objeto JavaScript em uma string JSON
+        })
+        .then(response => {
+          if (!response.ok) {
+            throw new Error('Erro na requisição: ' + response.status);
+          }
+          return response.json(); // Converte a resposta em JSON
+        })
+        .then(data => {
+          event.disabled = true
+          event.setAttribute('idbd', data.id)
+        })
+        .catch(error => {
+          console.error('Erro:', error); // Trata erros na requisição
+        });
+      }
+    }
+
+    function excluir (event) {
+      let divAfazerAtual = event.parentNode
+      let listaAtual = event.parentNode.parentNode.children 
+
+      if (listaAtual.length > 1 && listaAtual[listaAtual.length-1] != divAfazerAtual && divAfazerAtual.children[0].value != '') {
+        fetch(`https://localhost:7116/Afazer/${divAfazerAtual.children[0].getAttribute('idbd')}`, {
+          method: 'DELETE', // Método HTTP
+          headers: {
+            'Content-Type': 'application/json' // Especifica que estamos enviando JSON
+          },
+        })
+        .then(response => {
+          if (!response.ok) {
+            // Trata erros de resposta (HTTP 4xx ou 5xx)
+            throw new Error('Erro na requisição: ' + response.status);
+          }
+          return response.json(); // Converte a resposta em JSON
+        })
+        .then(data => {
+          divAfazerAtual.remove()
+        })
       }
     }
     function editar (event) {
       event.parentNode.children[0].disabled = false
       event.parentNode.children[0].focus()
       event.parentNode.children[0].setAttribute('onblur', 'atualizar(this)')
-      event.parentNode.children[0].setAttribute('onkeydown', "if(event.key === 'Enter')atualizar(this)")
+      event.parentNode.children[0].setAttribute('onkeydown', "if(event.key === 'Enter')moverCursor(this)")
     }
     function atualizar(event) {
       fetch(`https://localhost:7116/Afazer/${event.getAttribute('idbd')}`, {
@@ -355,7 +294,7 @@
       })
     }
 
-    function marcarFeito(event) {
+    function marcarFeito (event) {
       if (event.parentNode.children[0].value != '') {
         fetch(`https://localhost:7116/Afazer/ConcluirAfazer/${event.parentNode.children[0].getAttribute('idbd')}`, {
           method: 'PUT', // Método HTTP
@@ -372,17 +311,7 @@
           return response.json(); // Converte a resposta em JSON
         })
         .then(data => {
-          // event.parentNode.children[3].removeAttribute('onclick')
-          // event.parentNode.children[2].removeAttribute('onclick')
-          // event.parentNode.children[1].removeAttribute('onclick')
-          // event.parentNode.children[3].setAttribute('fill', 'currentColor')
-          // event.parentNode.children[2].setAttribute('fill', 'currentColor')
-          // event.parentNode.children[1].setAttribute('fill', 'currentColor')
-
-          event.parentNode.children[0].style.width = '90%'
-          event.parentNode.children[3].remove()
-          event.parentNode.children[2].remove()
-          event.parentNode.children[1].remove()
+          riscaTarefaExcluiBotoes(event.parentNode)
         })
       }
     }
@@ -392,11 +321,10 @@
           event.parentNode.children[1].children[i].remove()
         }
       }
-      get(event.value)
+      getLista(event.value)
     }
     function ocultarConcluidos(event) {
       let listas = document.getElementsByClassName('lista')
-      // console.log(listas)
       for (let i = 0; i < listas.length; i++) {
         for (let j = 0; j < listas[i].children.length; j++) {
           if (window.getComputedStyle(listas[i].children[j].children[0]).textDecoration.includes('line-through')) {
@@ -408,13 +336,24 @@
           }
         } 
       }
-      // listas.forEach(el => {
-      //   console.log(el)
-      // })
-      // if (!event.checked) {
-      //   window.getComputedStyle()
-      // }
-      // console.log(event.checked)
+    }
+    function moverCursor (event) {
+      event.parentNode.parentNode.querySelector(`#afazer${parseInt(event.parentNode.parentNode.children.length)}`).children[0].focus()
+    }
+    function riscaTarefaExcluiBotoes (elemento) {
+      elemento.children[0].style.textDecoration = 'line-through'
+      elemento.children[0].style.width = '97%'
+      elemento.children[3].style.display = 'none'
+      elemento.children[2].style.display = 'none'
+      elemento.children[1].style.display = 'none'
+    }
+    
+    function reexibeBotoes (elemento) {
+      elemento.children[0].style.textDecoration = 'none'
+      elemento.children[0].style.width = '80%'
+      elemento.children[1].style.display = 'inline-block'
+      elemento.children[2].style.display = 'inline-block'
+      elemento.children[3].style.display = 'inline-block'
     }
   </script>
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
