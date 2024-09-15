@@ -19,15 +19,15 @@ namespace Modulo.Controllers
     {
       int ListaId;
       if (quando == "hoje") {
-        DateTime hoje = DateTime.Today;
+        DateTime Hoje = DateTime.Today;
         ListaId = _context.Listas
-          .Where(x => x.created_at.Date == hoje)
+          .Where(x => x.created_at.Date == Hoje)
           .Select(x => x.Id)
           .FirstOrDefault();
       } else if (quando == "amanha") {
-        DateTime amanha = DateTime.Today.AddDays(1);
+        DateTime Amanha = DateTime.Today.AddDays(1);
         ListaId = _context.Listas
-          .Where(x => x.created_at.Date == amanha)
+          .Where(x => x.created_at.Date == Amanha)
           .Select(x => x.Id)
           .FirstOrDefault();
       } else {
